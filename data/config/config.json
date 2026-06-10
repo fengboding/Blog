@@ -1,0 +1,9 @@
+{
+    "title": {
+        "en-US": "Blog",
+        "zh-CN": "博客"
+    },
+    "github": "https://github.com",
+    "email": "hello@example.com",
+    "about": "data/config/about.md"
+}
