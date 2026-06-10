@@ -3,7 +3,7 @@
         "en-US": "Blog",
         "zh-CN": "博客"
     },
-    "github": "https://github.com",
+    "github": "https://github.com/fengboding/Blog",
     "email": "hello@example.com",
     "about": "data/config/about.md"
 }
