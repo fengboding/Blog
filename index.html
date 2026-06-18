@@ -283,10 +283,7 @@
         <div class="site-icon"><i data-lucide="book-open"></i></div>
         <h1 data-i18n="siteTitle">Blog</h1>
         <p data-i18n="siteDesc">Exploring ideas, code, and creativity</p>
-        <div class="contact-icons">
-            <a href="https://github.com" target="_blank" aria-label="GitHub" id="loading-github"></a>
-            <a href="mailto:hello@example.com" aria-label="Email"><i data-lucide="mail"></i></a>
-        </div>
+        <div class="contact-icons" id="loading-contacts"/>
         <div class="scroll-tip">
             <span data-i18n="scrollTip">Scroll or swipe to explore</span>
             <div class="scroll-icon"><i data-lucide="chevron-down"></i></div>
@@ -306,7 +303,7 @@
         </div>
     </header>
     <button class="btn btn-back" id="back-btn">
-        <i data-lucide="arrow-left" style="width:18px;height:18px"></i>
+        <i data-lucide="arrow-left" width="18" height="18"></i>
         <span class="back-label" data-i18n="back">Back</span>
     </button>
 
@@ -338,8 +335,8 @@
                 <div class="post-meta" id="post-meta"></div>
                 <div class="markdown-body" id="markdown-body"></div>
                 <div class="post-nav" id="post-nav">
-                    <div class="post-nav-col"><button class="btn post-nav-btn" id="post-prev" style="display:none"><i data-lucide="chevron-left" style="width:20px;height:20px"></i> <span id="prev-label"></span></button></div>
-                    <div class="post-nav-col"><button class="btn post-nav-btn" id="post-next" style="display:none"><span id="next-label"></span> <i data-lucide="chevron-right" style="width:20px;height:20px"></i></button></div>
+                    <div class="post-nav-col"><button class="btn post-nav-btn" id="post-prev" style="display:none"><i data-lucide="chevron-left" width="20" height="20"></i> <span id="prev-label"></span></button></div>
+                    <div class="post-nav-col"><button class="btn post-nav-btn" id="post-next" style="display:none"><span id="next-label"></span> <i data-lucide="chevron-right" width="20" height="20"></i></button></div>
                 </div>
             </div>
         </section>
@@ -363,7 +360,7 @@
         const CIRC = 125.66;
         const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
         const ESC_RE = /[&<>"']/g;
-        const GITHUB_SVG = '<svg viewBox="0 0 16 16" fill="currentColor" width="18" height="18"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>';
+        const GITHUB_SVG = '<svg viewBox="0 0 18 18" fill="currentColor" width="18" height="18"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>';
 
         marked.setOptions({ breaks: true, gfm: true });
 
@@ -434,7 +431,7 @@
             dom.postsGrid = $('posts-grid');
             dom.emptyState = $('empty-state');
             dom.pagination = $('pagination');
-            dom.loadingGithub = $('loading-github');
+            dom.loadingContacts = $('loading-contacts');
             dom.documentElement = document.documentElement;
             dom.headerTitle = document.querySelector('.header-title');
             dom.langBtn = document.querySelector('[aria-label="Change language"]');
@@ -461,11 +458,11 @@
             return (I18N[state.locale] || I18N['en-US'])[key] || I18N['en-US'][key] || key;
         }
 
-        function getConfigTitle() {
-            if (!state.config || !state.config.title) return null;
-            var title = state.config.title;
-            if (typeof title === 'string') return title;
-            return title[state.locale] || title['en-US'] || null;
+        function getSiteConfig(key) {
+            if (!state.config || !state.config[key]) return null;
+            var data = state.config[key];
+            if (typeof title === 'string') return data;
+            return data[state.locale] || data['en-US'] || null;
         }
 
         function setupTagCycling(root) {
@@ -504,15 +501,16 @@
         }
 
         function applyI18n() {
-            const title = getConfigTitle() || t('siteTitle');
             dom.i18nElements.forEach(function(el) {
                 const i18n = el.getAttribute('data-i18n');
-                if (i18n) {
-                    el.textContent = i18n === 'siteTitle' ? title : t(i18n);
+                if (i18n && (i18n === 'siteTitle' || i18n === 'siteDesc')) {
+                    var data = getSiteConfig(i18n);
+                    el.textContent = data ? data : t(i18n);
                 }
                 const ph = el.getAttribute('data-i18n-placeholder');
                 if (ph) el.placeholder = t(ph);
             });
+            var title = getSiteConfig('siteTitle');
             dom.footerCopyright.textContent = '© ' + new Date().getFullYear() + ' ' + title + '.';
             dom.documentElement.lang = state.locale;
             document.title = title;
@@ -572,15 +570,19 @@
             }
         }
 
-        function renderFooter() {
+        function renderContacts() {
             const c = state.config;
             if (!c) return;
-            const contacts = dom.footerContacts;
+
+            const loadingContacts = dom.loadingContacts;
+            const footerContacts = dom.footerContacts;
+            
             let html = '';
             if (c.github) html += '<a href="' + c.github + '" target="_blank" aria-label="GitHub">' + GITHUB_SVG + '</a>';
-            if (c.email) html += '<a href="mailto:' + c.email + '" aria-label="Email"><i data-lucide="mail" style="width:18px;height:18px"></i></a>';
-            contacts.innerHTML = html;
-            lucide.createIcons({ nodes: [contacts] });
+            if (c.email) html += '<a href="mailto:' + c.email + '" aria-label="Email"><i data-lucide="mail" width="18" height="18"></i></a>';
+            loadingContacts.innerHTML = html;
+            footerContacts.innerHTML = html;
+            lucide.createIcons({ nodes: [loadingContacts,footerContacts] });
         }
 
         async function renderAbout() {
@@ -635,7 +637,7 @@
                     ' <span class="count">(' + tag.count + ')</span></button>';
             });
             if (state.activeTags.size) {
-                html += '<button class="reset-btn" data-action="reset"><i data-lucide="rotate-ccw" style="width:14px;height:14px"></i> ' + t('reset') + '</button>';
+                html += '<button class="reset-btn" data-action="reset"><i data-lucide="rotate-ccw" width="14" height="14"></i> ' + t('reset') + '</button>';
             }
             bar.innerHTML = html;
             lucide.createIcons({ nodes: [bar] });
@@ -678,14 +680,14 @@
             if (totalPages > 1) {
                 let ph = '<button class="page-btn" data-page="' + (state.currentPage - 1) + '"' +
                     (state.currentPage === 1 ? ' disabled' : '') + '>' +
-                    '<i data-lucide="chevron-left" style="width:16px;height:16px"></i></button>';
+                    '<i data-lucide="chevron-left" width="16" height="16"></i></button>';
                 for (let i = 1; i <= totalPages; i++) {
                     ph += '<button class="page-btn' + (i === state.currentPage ? ' active' : '') +
                         '" data-page="' + i + '">' + i + '</button>';
                 }
                 ph += '<button class="page-btn" data-page="' + (state.currentPage + 1) + '"' +
                     (state.currentPage === totalPages ? ' disabled' : '') + '>' +
-                    '<i data-lucide="chevron-right" style="width:16px;height:16px"></i></button>';
+                    '<i data-lucide="chevron-right" width="16p" height="16"></i></button>';
                 pag.innerHTML = ph;
             } else { pag.innerHTML = ''; }
             lucide.createIcons({ nodes: [grid, pag] });
@@ -730,7 +732,7 @@
                     wrap.className = 'code-block';
                     wrap.innerHTML = '<div class="code-bar"><span class="code-bar-lang">' + esc(lang) + '</span>' +
                         '<button class="copy-btn" data-action="copy">' +
-                        '<i data-lucide="copy" style="width:14px;height:14px"></i> ' + t('copy') + '</button></div>';
+                        '<i data-lucide="copy" width="14" height="14"></i> ' + t('copy') + '</button></div>';
                     pre.parentNode.insertBefore(wrap, pre);
                     wrap.appendChild(pre);
                     hljs.highlightElement(code);
@@ -805,12 +807,10 @@
         async function init() {
             state.locale = detectLocale();
             applyTheme(detectTheme());
-            applyI18n();
             lucide.createIcons({ nodes: [dom.loadingOverlay, dom.header, dom.backBtn] });
-            dom.loadingGithub.innerHTML = GITHUB_SVG;
             await loadData();
             applyI18n();
-            renderFooter();
+            renderContacts();
             renderList();
         }
 
@@ -898,10 +898,10 @@
             dom.markdownBody.addEventListener('click', function(e) {
                 const btn = e.target.closest('.copy-btn');
                 if (!btn || btn.dataset.action !== 'copy') return;
-                btn.innerHTML = '<i data-lucide="check" style="width:14px;height:14px"></i> ' + t('copied');
+                btn.innerHTML = '<i data-lucide="check" width="14" height="14"></i> ' + t('copied');
                 lucide.createIcons({ nodes: [btn] });
                 setTimeout(function() {
-                    btn.innerHTML = '<i data-lucide="copy" style="width:14px;height:14px"></i> ' + t('copy');
+                    btn.innerHTML = '<i data-lucide="copy" width="14" height="14"></i> ' + t('copy');
                     lucide.createIcons({ nodes: [btn] });
                 }, 2000);
                 const code = btn.closest('.code-block') && btn.closest('.code-block').querySelector('code');
