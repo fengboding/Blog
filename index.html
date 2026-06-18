@@ -458,8 +458,8 @@
         }
 
         function getConfigTitle() {
-            if (!state.config || !state.config.title) return null;
-            var title = state.config.title;
+            if (!state.config || !state.config.siteTitle) return null;
+            var title = state.config.siteTitle;
             if (typeof title === 'string') return title;
             return title[state.locale] || title['en-US'] || null;
         }

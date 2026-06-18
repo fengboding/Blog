@@ -42,6 +42,14 @@ tags: [标签1, 标签2]
 
 ```json
 {
+    "siteTitle": {
+        "en-US": "Blog",
+        "zh-CN": "博客"
+    },
+    "siteDesc": {
+        "en-US": "Exploring ideas, code, and creativity",
+        "zh-CN": "探索想法、代码与创意"
+    },
     "github": "https://github.com/your-username",
     "email": "hello@example.com",
     "about": "data/config/about.md"

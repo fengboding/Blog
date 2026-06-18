@@ -4,9 +4,9 @@ title: About
 
 # About Me
 
-Hi, I'm a developer who loves exploring ideas, code, and creativity.
+Hi, I'm a xx who loves exploring ideas and creativity.
 
-This blog is where I share my thoughts on web development, programming languages, and the tools that make building software enjoyable.
+This blog is where I share my thoughts.
 
 ## What I Write About
 
